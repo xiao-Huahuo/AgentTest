@@ -1,3 +1,4 @@
 .jbeval
 single_test/chroma_db_storage
 single_test/short_term_memory.db
+.idea
