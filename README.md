@@ -31,6 +31,12 @@
 
 ---
 
+## 工具配置
+**用户必须在`agent/tools.py`中定义符合自身业务的工具函数.**
+每个工具函数需使用 @tool 装饰器并包含详尽的 Docstring，因为 Agent 依靠解析这些文字描述来决策何时调用该工具；若工具内需访问长期记忆，务必通过 get_long_term_memory() 获取全局唯一实例，以确保数据一致性并防止 Embedding 模型重复加载；最后将函数名添加至 tools 列表即可完成注册，内核会自动在 agent 节点触发决策并在 action 节点执行相应逻辑。
+
+---
+
 ## 完整接口方法说明
 
 ### 1. 会话管理类 (SQLiteConversationStore)
