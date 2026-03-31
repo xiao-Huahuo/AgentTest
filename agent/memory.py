@@ -180,5 +180,18 @@ class LongTermMemory:
         """
         pass
 
+# 全局单例变量,确保在AgentConfig初始化之后才会初始化chromaDB,以防出现根目录出现未定义文件名向量库文件夹
+_global_memory_instance = None
+
+def get_long_term_memory():
+    """
+    延迟实例化函数：确保在调用时 AgentConfig 已经完成了 setup() [cite: 2026-03-31]
+    """
+    global _global_memory_instance
+    if _global_memory_instance is None:
+        # 此时 AgentConfig.VECTOR_DB_PATH 已经被 setup 修改过
+        _global_memory_instance = LongTermMemory()
+    return _global_memory_instance
+
 # 共享LongTermMemory实例，确保全局唯一
-long_term_memory = LongTermMemory()
+# long_term_memory = LongTermMemory()

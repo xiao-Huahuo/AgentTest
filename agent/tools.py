@@ -1,13 +1,14 @@
 from langchain_core.tools import tool
 from langgraph.prebuilt import ToolNode
 
-from agent.memory import LongTermMemory,long_term_memory
+from agent.memory import LongTermMemory,get_long_term_memory
 
 # TODO: 用户需在这里手动写Agent可调用的工具和逻辑
 
 @tool
 def query_long_term_memory(query: str):
     """当需要获取用户的项目背景、历史经验或技术偏好时，调用此工具检索长期记忆。"""
+    long_term_memory = get_long_term_memory()
     # 此处 user_id 固定为演示 ID
     results = long_term_memory.collection.query(query_texts=[query], n_results=3, where={"user_id": "slump_student_2024"})
     context = "\n".join(results['documents'][0]) if results['documents'][0] else "未找到相关记忆。"

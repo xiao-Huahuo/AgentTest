@@ -10,7 +10,7 @@ from langgraph.checkpoint.sqlite import SqliteSaver
 from langgraph.graph.state import CompiledStateGraph
 
 from agent.config import AgentConfig
-from agent.memory import LongTermMemory, long_term_memory
+from agent.memory import LongTermMemory, get_long_term_memory
 from agent.tools import tools, tool_node
 
 
@@ -27,7 +27,7 @@ class AgentCore:
 
     def __init__(self):
         # 调用共享长期记忆引擎，获取数据库连接实例 [cite: 2026-03-31]
-        self.memory_engine = long_term_memory
+        self.memory_engine = get_long_term_memory()
 
         # 初始化模型并绑定工具
         self.model = ChatOpenAI(
